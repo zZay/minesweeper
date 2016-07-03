@@ -88,10 +88,10 @@ function init(x, y, mine) {
 	for(var i = 1, row = mineArray.length - 1; i < row; i ++) {
 		for(var j = 1, col = mineArray[0].length - 1; j < col; j ++) {
 			block +=
-				'<div id="b' + i + '-' + j + '" style="left:' + (j-1) * 20 + 'px;top:' + (i-1) * 20 + 'px;" class="hidden"></div>';
+				'<div id="b' + i + '-' + j + '" style="left:' + (j-1) * 30 + 'px;top:' + (i-1) * 30 + 'px;" class="hidden"></div>';
 		}
 	}
-	$('#gamemain').html(block).width(x * 20 + 1).height(y * 20 + 1).show();  //绘图
+	$('#gamemain').html(block).width(x * 30).height(y * 30).show();  //绘图
 	$('#gamewarning').html('');
 	$('#gamesubmenu').show();
 	$('#gamelastnum').text(lastNum);
@@ -115,7 +115,8 @@ function openBlock(x, y) {
 			current.addClass('wrong');
 			if(inGame) endGame();
 		} else {
-			current.html(mineArray[x][y]).addClass('num' + mineArray[x][y]).removeClass('hidden');  //显示周边的地雷数量
+			current.html(mineArray[x][y]).addClass('num' + mineArray[x][y])
+				.addClass('clear').removeClass('hidden');  //显示周边的地雷数量
 			if(current.hasClass('check')) current.removeClass('check');
 			if(inGame) countNum --;
 		}
@@ -125,6 +126,7 @@ function openBlock(x, y) {
 			if(inGame) endGame();
 		} else {
 			current.removeClass('hidden');
+			current.addClass('clear');
 			if(current.hasClass('check')) current.removeClass('check');
 			if(inGame) {  //点击到周边无雷的方块时，自动揭开周围方块
 				countNum --;

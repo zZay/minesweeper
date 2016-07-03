@@ -25,6 +25,7 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 	width:400px;
 	padding:5px;
 	border:2px solid black;
+	color:#000000;
 	background:#fff;
 	display:none;
 	z-index:99;

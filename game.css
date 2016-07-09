@@ -1,17 +1,15 @@
 ﻿body{
-	background:url(bg02.jpg);
+	background:url(bg480.jpg);
 	color:#ffffff;
 	font-family:"Microsoft YaHei";
 }
 a:link {color:#ffffff; text-decoration:none;}
 a:visited {color:#ffffff; text-decoration:none;}
 a:hover {color:#aaaaaa; text-decoration:underline;}
-#maintable{
-	margin:0px auto;
-}
 #game{
+	margin:0px auto;
 	padding:10px;
-	border:2px solid #000;
+	#border:2px solid #000;
 	font-size:14px;
 }
 #gamemenu{
@@ -19,9 +17,10 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 	text-align:center;
 }
 #gamehelp{
-	position:absolute;
-	top:40px;
-	left:20px;
+	#position:absolute;
+	#top:40px;
+	#left:20px;
+	margin:0px auto;
 	width:400px;
 	padding:5px;
 	border:2px solid black;
@@ -38,8 +37,9 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 	color:#f00;
 }
 #gamemain{
+	margin:0px auto;
 	position:relative;
-	background:#ddd;
+	#background:#ddd;
 	border:2px solid #086E00;
 	display:none;
 }
@@ -47,12 +47,64 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 	position:absolute;
 	height:30px;
 	width:30px;
-	#padding-top:2px;
-	#border:1px solid #888;
-	font-weight:bold;
 	line-height:30px;
+	font-weight:bold;
 	text-align:center;
 	cursor:default;
+	#padding-top:2px;
+	#border:1px solid #888;
+	#background-size:cover;
+}
+
+#title{
+	margin:0px auto 50px;
+	width:235px;
+	height:160px;
+	background:url(title.jpg) 0 0;
+}
+#easy{
+	margin:0px auto;
+	width:155px;
+	height:60px;
+	background:url(menu69.jpg) 0 0;
+}
+#normal{
+	margin:0px auto;
+	width:235px;
+	height:60px;
+	background:url(menu69.jpg) 0px -69px;
+}
+#hard{
+	margin:0px auto;
+	width:170px;
+	height:60px;
+	background:url(menu69.jpg) 0px -138px;
+}
+#custom{
+	margin:0px auto;
+	width:235px;
+	height:60px;
+	background:url(menu69.jpg) 0px -207px;
+}
+#option{
+	display:none;
+	padding-left:20px;
+}
+#start{
+	margin:0px auto;
+	width:185px;
+	height:60px;
+	background:url(menu69.jpg) 0px -276px;
+}
+#help{
+	margin:0px auto;
+	width:160px;
+	height:60px;
+	background:url(menu69.jpg) 0px -345px;
+}
+.inputnum{
+	margin:10px 20px 0px 0px;
+	width:50px;
 }
 
 .hidden{background:url(30.jpg) 0 0;}
@@ -61,6 +113,7 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 .bomb{background:url(30.jpg) -90px 0;}
 .cbomb{background:url(30.jpg) -90px 0;}
 .wrong{background:url(30.jpg) -120px 0;}
+.hint{background:url(30.jpg) -150px 0;}
 .clear{background:url(30.jpg) -180px 0;}
 
 .num1{color:#3EA4B2;}
@@ -68,6 +121,6 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 .num3{color:#65B346;}
 .num4{color:#9C5D94;}
 .num5{color:#AE2918;}
-.num6{color:#008080;}
+.num6{color:#2A993A;}
 .num7{color:#7F5F84;}
 .num8{color:#808080;}

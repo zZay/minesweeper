@@ -25,17 +25,25 @@ $(document).ready(function()
 	});
 	$("#help").click(function()
 	{
-		$('#gamehelp').show();
+		$("#gamehelp").slideToggle("slow");
 	});
 });
 
 function custom_init()
 {
-	var x = $("#widthnum").attr("value") - 0;
-	var y = $("#heightnum").attr("value") - 0;
+	var x = $("#heightnum").attr("value") - 0;
+	var y = $("#widthnum").attr("value") - 0;
 	var m = $("#minenum").attr("value") - 0;
-	//some judgements
-	init(10, 10, 10);
+	if(x < 5)
+		x = 5;
+	if(y < 5)
+		y = 5;
+	if(m < x * y * 0.05)
+		m = Math.ceil(x * y * 0.05);
+	if(m > x * y * 0.3)
+		m = Math.floor(x * y * 0.3);
+	
+	init(x, y, m);
 	scroll2bottom();
 }
 

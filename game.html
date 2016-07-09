@@ -9,7 +9,7 @@
 <body>
 	<script type="text/javascript" src="game.js"></script>
 	<script type="text/javascript" src="gui.js"></script>
-	<div id="game">
+	<div id="container">
 		<div id="gamemenu">
 			<div id="title"></div>
 			<div id="easy"></div>
@@ -17,13 +17,12 @@
 			<div id="hard"></div>
 			<div id="custom"></div>
 			<div id="option">
-				长度：<input id="widthnum" class="inputnum" type="text" value = "10"/>
+				高度：<input id="widthnum" class="inputnum" type="text" value = "10"/>
 				宽度：<input id="heightnum" class="inputnum" type="text" value = "10"/>
 				雷数：<input id="minenum" class="inputnum" type="text" value = "10"/>
 				<div id="start"></div>
 			</div>
 			<div id="help"></div>
-			
 			<div id="gamehelp"><strong>游戏规则：</strong>
 				扫雷就是要把所有非地雷的格子揭开即胜利；踩到地雷格子就算失败.</br>
 				<strong>游戏操作：</strong>游戏主区域由很多个方格组成。</br>

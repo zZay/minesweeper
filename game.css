@@ -6,15 +6,11 @@
 a:link {color:#ffffff; text-decoration:none;}
 a:visited {color:#ffffff; text-decoration:none;}
 a:hover {color:#aaaaaa; text-decoration:underline;}
-#game{
+#container{
 	margin:0px auto;
 	padding:10px;
 	#border:2px solid #000;
 	font-size:14px;
-}
-#gamemenu{
-	position:relative;
-	text-align:center;
 }
 #gamehelp{
 	#position:absolute;
@@ -27,7 +23,7 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 	color:#000000;
 	background:#fff;
 	display:none;
-	z-index:99;
+	#z-index:99;
 }
 #gamesubmenu{
 	display:none;
@@ -89,10 +85,11 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 #option{
 	display:none;
 	padding-left:20px;
+	text-align:center;
 }
 #start{
 	margin:0px auto;
-	width:185px;
+	width:205px;
 	height:60px;
 	background:url(menu69.jpg) 0px -276px;
 }

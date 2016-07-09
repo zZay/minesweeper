@@ -89,7 +89,7 @@ $(function()
 		}
 	});
 	$('#gamemain').bind('contextmenu', function() {return false;});
-	$('#gamehelp').click(function() {$(this).hide();});
+	//$('#gamehelp').click(function() {$(this).hide();});    ————————————一处修改————————————
 });
 
 

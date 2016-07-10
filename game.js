@@ -1,49 +1,71 @@
-var mineArea  = [];
+var mineArea;
 var remainingMine;
 var remainingBlock;
 var gameStatus;
+//0: gameover; 
+//1: running in normal mode
+//2: after initializing but before running in normal mode
+//3: running in loop mode
+//4: after initializing but before running in loop mode
 var begTime;
 var blockEdge = 30;
+var lastX, lastY;
+var dragging = false;
+
 
 $(function()
 {
 	$('#gamemain').mouseup(function(e)
 	{
+		dragging = false;
 		var clickBlock = $(e.target);
 		var id = clickBlock.attr('id');
 		var	x = parseInt(id.substring(1, id.indexOf('-'))); 
 		var	y = parseInt(id.substring(id.indexOf('-') + 1));
-		if(gameStatus == 1)
+		if(gameStatus == 1 || gameStatus == 3)
 		{
+			var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
 			if(e.which == 1)
 			{
-				if(clickBlock.hasClass('hidden') && !clickBlock.hasClass('flag'))
-					sweepBlock(x, y);
-				else if(!clickBlock.hasClass('hidden'))
+				if(clickBlock.hasClass('hidden'))
 				{
-					sweepBlockAround(x, y);
+					gameStatus == 1 ? sweepBlock(x, y) : sweepBlockLoop(x, y);
+				}
+				else if(!clickBlock.hasClass('flag'))
+				{
+					gameStatus == 1 ? sweepBlockAround(x, y) : sweepBlockAroundLoop(x, y);
 					for(var i = x - 1; i <= x + 1; i++)
 					{
 						for(var j = y - 1; j <= y + 1; j++)
 						{
-							var block = $('#b' + i + '-' + j);
-							if(block.hasClass('hint')) block.removeClass('hint');
+							if(gameStatus == 1)
+							{
+								var block = $('#b' + i + '-' + j);
+								if(block.hasClass('hint')) block.removeClass('hint');
+							}
+							else
+							{
+								var ii = i < 1 ? lenX : (i > lenX ? 1 : i);
+								var jj = j < 1 ? lenY : (j > lenY ? 1 : j);
+								var block = $('#b' + ii + '-' + jj);
+								if(block.hasClass('hint')) block.removeClass('hint');
+							}
 						}
 					}
 				}
 			}
-			else if(e.which == 3 && clickBlock.hasClass('hidden'))
+			else if(e.which == 3 && (clickBlock.hasClass('hidden') || clickBlock.hasClass('flag')))
 			{
 				if(clickBlock.hasClass('flag'))
 				{
 					clickBlock.removeClass('flag');
-					if($('#gamecheck').attr('checked')) clickBlock.addClass('check');
+					clickBlock.addClass('hidden');
 					remainingMine++;
 					remainingBlock++;
 				}
-				else if(clickBlock.hasClass('check')) clickBlock.removeClass('check');
 				else
 				{
+					clickBlock.removeClass('hidden');
 					clickBlock.addClass('flag');
 					remainingMine--;
 					remainingBlock--;
@@ -52,12 +74,11 @@ $(function()
 			}
 			if(remainingMine == remainingBlock) gameover(true);
 		}
-		else if(gameStatus == 2)
+		else if(gameStatus == 2 || gameStatus == 4)
 		{
 			if(e.which == 1)
 			{
-				sweepBlock(x, y);
-				gameStatus = 1;
+				gameStatus == 2 ? sweepBlock(x, y) : sweepBlockLoop(x, y);
 				begTime = (new Date()).getTime();
 				startTimer();
 			}
@@ -65,171 +86,128 @@ $(function()
 	});
 	$('#gamemain').mousedown(function(e)
 	{
-		var clickBlock = $(e.target);
-		var id = clickBlock.attr('id');
-		var	x = parseInt(id.substring(1, id.indexOf('-'))); 
-		var	y = parseInt(id.substring(id.indexOf('-') + 1));
-		if(gameStatus == 1)
+		if(gameStatus == 1 || gameStatus == 3)
 		{
+			var clickBlock = $(e.target);
+			var id = clickBlock.attr('id');
+			var	x = parseInt(id.substring(1, id.indexOf('-'))); 
+			var	y = parseInt(id.substring(id.indexOf('-') + 1));
+			lastX = x, lastY = y;
+			dragging = true;
 			if(e.which == 1)
 			{
+				var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
 				if(!clickBlock.hasClass('hidden'))
 				{
 					for(var i = x - 1; i <= x + 1; i++)
 					{
 						for(var j = y - 1; j <= y + 1; j++)
 						{
-							var block = $('#b' + i + '-' + j);
-							if(block.hasClass('hidden') && !block.hasClass('flag') && !block.hasClass('check')) 
-								block.addClass('hint');
+							if(gameStatus == 1)
+							{
+								var block = $('#b' + i + '-' + j);
+								if(block.hasClass('hidden')) block.addClass('hint');
+							}
+							else
+							{
+								var ii = i < 1 ? lenX : (i > lenX ? 1 : i);
+								var jj = j < 1 ? lenY : (j > lenY ? 1 : j);
+								var block = $('#b' + ii + '-' + jj);
+								if(block.hasClass('hidden')) block.addClass('hint');
+							}
 						}
 					}
 				}
 			}
 		}
 	});
+	$('#gamemain').mousemove(function(e)
+	{
+		if(dragging == true && gameStatus == 3)
+		{
+			var clickBlock = $(e.target);
+			var id = clickBlock.attr('id');
+			var	x = parseInt(id.substring(1, id.indexOf('-'))); 
+			var	y = parseInt(id.substring(id.indexOf('-') + 1));
+			var dict = {x: x - lastX, y: y - lastY};
+			lastX = x, lastY = y;
+			moveMineArea(dict);
+		}
+	});
+	$('body').keydown(function(e)
+	{
+		if(gameStatus == 3)
+		{
+			var key = String.fromCharCode(e.which);
+			var dict = {x: 0, y: 0};
+			switch(key)
+			{
+			case 'W':
+				dict.y = -1;
+				break;
+			case 'A':
+				dict.x = -1;
+				break;
+			case 'S':
+				dict.y = 1;
+				break;
+			case 'D':
+				dict.x = 1;
+				break;
+			}
+			moveMineArea(dict);
+		}
+	});
 	$('#gamemain').bind('contextmenu', function() {return false;});
-	//$('#gamehelp').click(function() {$(this).hide();});    ————————————一处修改————————————
 });
 
-
-function init(lenX, lenY, numMine)
+function moveMineArea(dict)
 {
-	remainingBlock = lenX * lenY;
-	gameStatus = 2;
-	remainingMine = numMine;
-	mineArea = new Array(lenX + 2);
-	$.each(mineArea, function(row) {mineArea[row] = new Array(lenY + 2);});
+	if(dict.x == 0 && dict.y == 0) return;
+	var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
+	var temArea = new Array(lenX + 2);
+	$.each(temArea, function(row) {temArea[row] = new Array(lenY + 2);});
 	for(var i = 1; i <= lenX; i++)
-		for(var j = 1; j <= lenY; j++)
-			mineArea[i][j] = 0;
-	while(numMine > 0)
 	{
-		var i = Math.ceil(Math.random() * lenX);
-		var j = Math.ceil(Math.random() * lenY);
-		if(mineArea[i][j] != -1)
+		for(var j = 1; j <= lenY; j++)
 		{
-			mineArea[i][j] = -1;
-			numMine--;
+			var ii = (i + dict.x - 1 + lenX) % lenX + 1;
+			var jj = (j + dict.y - 1 + lenY) % lenY + 1;
+			temArea[ii][jj] = mineArea[i][j];
 		}
 	}
-	for(var x = 1; x <= lenX; x++)
-		for(var y = 1; y <= lenY; y++)
-			if(mineArea[x][y] != -1)
-				for(var i = x - 1; i <= x + 1; i++)
-					for(var j = y - 1; j <= y + 1; j++)
-						if(i >= 1 && i <= lenX && j >= 1 && j <= lenY && mineArea[i][j] == -1)
-							mineArea[x][y]++;
+	delete mineArea;
+	mineArea = temArea;
 	var area = '';
 	for(var i = 1; i <= lenX; i++)
+	{
 		for(var j = 1; j <= lenY; j++)
+		{
+			var ii = (i - dict.x - 1 + lenX) % lenX + 1;
+			var jj = (j - dict.y - 1 + lenY) % lenY + 1;
+			var block = $('#b' + ii + '-' + jj);
+			var number = '';
+			if(block.attr('class').indexOf('num') != -1) 
+				number = block.attr('class')[3];
+			debugger;
 			area += "<div id = 'b" + i + '-' + j + 
 				"' style = 'left: " + (i - 1) * blockEdge + 
-				"px; top: " + (j - 1) * blockEdge + "px;' class = 'hidden'></div>";
+				"px; top: " + (j - 1) * blockEdge + "px;' class = '" + block.attr('class') +
+				 "'>" + number + "</div>";
+		}
+	}
 	$('#gamemain').html(area).width(lenX * blockEdge).height(lenY * blockEdge).show();
-	$('#gamewarning').html('');
-	$('#gamesubmenu').show();
-	$('#gamelastnum').text(remainingMine);
-}
-
-function sweepBlock(x, y)
-{
-	var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
-	var block = $('#b' + x + '-' + y);
-	if(mineArea[x][y] == -1)
-	{
-		switch(gameStatus)
-		{
-		case 1:
-			block.addClass('bomb');
-			gameover(false);
-			break;
-		case 2:
-			init(lenX, lenY, remainingMine);
-			sweepBlock(x, y);
-			break;
-		default:
-			if(!block.hasClass('flag')) block.addClass('bomb');
-			break;
-		}
-	}
-	else if(mineArea[x][y] >= 0)
-	{
-		if(gameStatus == 2 && mineArea[x][y] != 0)
-		{
-			init(lenX, lenY, remainingMine);
-			sweepBlock(x, y);
-			return;
-		}
-		if(block.hasClass('flag'))
-		{
-			block.addClass('wrong');
-			if(gameStatus == 1) gameover(false);
-		}
-		else if(mineArea[x][y] > 0)
-		{
-			block.html(mineArea[x][y]).addClass('num' + mineArea[x][y])
-				.addClass('clear').removeClass('hidden');
-			if(block.hasClass('check')) block.removeClass('check');
-			if(gameStatus == 1) remainingBlock--;
-		}
-		else
-		{
-			block.addClass('clear').removeClass('hidden');
-			if(block.hasClass('check')) block.removeClass('check');
-			if(gameStatus == 1 || gameStatus == 2)
-			{
-				gameStatus = 1;
-				remainingBlock--;
-				for(var i = x - 1; i <= x + 1; i++)
-					for(var j = y - 1; j <= y + 1; j++)
-						if(i >= 1 && i <= lenX &&
-							j >= 1 && j <= lenY &&
-							$('#b' + i + '-' + j).hasClass('hidden'))
-							sweepBlock(i, j);
-			}
-		}
-	}
-}
-
-function sweepBlockAround(x, y)
-{
-	var numFlag = 0, numHidden = 0;
-	for(var i = x - 1; i <= x + 1; i++)
-	{
-		for(var j = y - 1; j <= y + 1; j++)
-		{
-			if(mineArea[i][j] != undefined)
-			{
-				var blockId = '#b' + i + '-' + j;
-				if($(blockId).hasClass('flag')) numFlag++;
-				if($(blockId).hasClass('hidden')) numHidden++;
-			}
-		}
-	}
-	if(numFlag == mineArea[x][y] && numHidden > numFlag)
-	{
-		for(var i = x - 1; i <= x + 1; i++)
-		{
-			for(var j = y - 1; j <= y + 1; j++)
-			{
-				var blockId = '#b' + i + '-' + j;
-				if(mineArea[i][j] >= 0 && $(blockId).hasClass('hidden'))
-					sweepBlock(i, j);
-			}
-		}
-	}
 }
 
 function startTimer()
 {
-	if(gameStatus == 1)
+	if(gameStatus == 1 || gameStatus == 3)
 	{
 		var timeNow = (new Date()).getTime();
 		$('#gametime').text(Math.ceil((timeNow - begTime) / 1000));
 		setTimeout('startTimer()', 500);
 	} 
-	else if(gameStatus == 2) $('#gametime').text('0');
+	else if(gameStatus == 2 || gameStatus == 4) $('#gametime').text('0');
 }
 
 function gameover(win)
@@ -248,8 +226,11 @@ function gameover(win)
 			if(win)
 			{
 				var blockId = '#b' + i + '-' + j;
-				if($(blockId).hasClass('hidden') && !$(blockId).hasClass('flag'))
+				if($(blockId).hasClass('hidden'))
+				{
+					$(blockId).removeClass('hidden');
 					$(blockId).addClass('flag');
+				}
 			}
 			else sweepBlock(i, j);
 		}

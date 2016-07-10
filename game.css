@@ -2,15 +2,86 @@
 	background:url(bg480.jpg);
 	color:#ffffff;
 	font-family:"Microsoft YaHei";
+	-webkit-user-select: none;
+	user-select: none;
 }
-a:link {color:#ffffff; text-decoration:none;}
-a:visited {color:#ffffff; text-decoration:none;}
-a:hover {color:#aaaaaa; text-decoration:underline;}
 #container{
 	margin:0px auto;
 	padding:10px;
 	#border:2px solid #000;
 	font-size:14px;
+}
+#title{
+	margin:0px auto 50px;
+	width:780px;
+	height:120px;
+	background:url(title2.jpg) 0px 0px;
+}
+.menu{
+	margin:0px auto;
+	height:60px;
+	cursor:hand;
+}
+#mode{
+	margin:0px auto;
+	height:170px;
+	width:300px;
+	-webkit-transform:scale(0.7);
+}
+#classic{
+	float:left;
+	width:118px;
+	height:170px;
+	cursor:hand;
+	background:url(mode.jpg) 0px 0px;
+	border-style:solid;
+	border-width:5px;
+	border-color:#000000;
+	border-radius:10px;
+}
+#loop{
+	float:right;
+	width:119px;
+	height:170px;
+	cursor:hand;
+	background:url(mode.jpg) -120px 0px;
+	border-style:solid;
+	border-width:5px;
+	border-color:#045000;
+	border-radius:10px;
+}
+#easy{
+	width:155px;
+	background:url(menu69.jpg) 0px 0px;
+}
+#normal{
+	width:235px;
+	background:url(menu69.jpg) 0px -69px;
+}
+#hard{
+	width:170px;
+	background:url(menu69.jpg) 0px -138px;
+}
+#custom{
+	width:235px;
+	background:url(menu69.jpg) 0px -207px;
+}
+#start{
+	width:205px;
+	background:url(menu69.jpg) 0px -276px;
+}
+#help{
+	width:160px;
+	background:url(menu69.jpg) 0px -345px;
+}
+#option{
+	display:none;
+	padding-left:20px;
+	text-align:center;
+}
+.inputnum{
+	margin:10px 20px 0px 0px;
+	width:50px;
 }
 #gamehelp{
 	#position:absolute;
@@ -33,11 +104,13 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 	color:#f00;
 }
 #gamemain{
-	margin:0px auto;
+	margin:20px auto;
 	position:relative;
 	#background:#ddd;
 	border:2px solid #086E00;
 	display:none;
+	-webkit-transform-origin:50% 0%;
+	-webkit-transform:scale(1);
 }
 #gamemain div{
 	position:absolute;
@@ -52,58 +125,6 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 	#background-size:cover;
 }
 
-#title{
-	margin:0px auto 50px;
-	width:235px;
-	height:160px;
-	background:url(title.jpg) 0 0;
-}
-#easy{
-	margin:0px auto;
-	width:155px;
-	height:60px;
-	background:url(menu69.jpg) 0 0;
-}
-#normal{
-	margin:0px auto;
-	width:235px;
-	height:60px;
-	background:url(menu69.jpg) 0px -69px;
-}
-#hard{
-	margin:0px auto;
-	width:170px;
-	height:60px;
-	background:url(menu69.jpg) 0px -138px;
-}
-#custom{
-	margin:0px auto;
-	width:235px;
-	height:60px;
-	background:url(menu69.jpg) 0px -207px;
-}
-#option{
-	display:none;
-	padding-left:20px;
-	text-align:center;
-}
-#start{
-	margin:0px auto;
-	width:205px;
-	height:60px;
-	background:url(menu69.jpg) 0px -276px;
-}
-#help{
-	margin:0px auto;
-	width:160px;
-	height:60px;
-	background:url(menu69.jpg) 0px -345px;
-}
-.inputnum{
-	margin:10px 20px 0px 0px;
-	width:50px;
-}
-
 .hidden{background:url(30.jpg) 0 0;}
 .flag{background:url(30.jpg) -30px 0;}
 .check{background:url(30.jpg) -60px 0;}
@@ -113,11 +134,17 @@ a:hover {color:#aaaaaa; text-decoration:underline;}
 .hint{background:url(30.jpg) -150px 0;}
 .clear{background:url(30.jpg) -180px 0;}
 
-.num1{color:#3EA4B2;}
-.num2{color:#99B222;}
-.num3{color:#65B346;}
-.num4{color:#9C5D94;}
-.num5{color:#AE2918;}
-.num6{color:#2A993A;}
-.num7{color:#7F5F84;}
-.num8{color:#808080;}
+.num1{background:url(30.jpg) -180px 0;color:#3EA4B2;}
+.num2{background:url(30.jpg) -180px 0;color:#99B222;}
+.num3{background:url(30.jpg) -180px 0;color:#65B346;}
+.num4{background:url(30.jpg) -180px 0;color:#9C5D94;}
+.num5{background:url(30.jpg) -180px 0;color:#AE2918;}
+.num6{background:url(30.jpg) -180px 0;color:#2A993A;}
+.num7{background:url(30.jpg) -180px 0;color:#7F5F84;}
+.num8{background:url(30.jpg) -180px 0;color:#808080;}
+
+#foot{
+	color:#bbbbbb;
+	margin:30px auto;
+	text-align:center;
+}

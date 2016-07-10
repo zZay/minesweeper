@@ -8,30 +8,36 @@
 </head>
 <body>
 	<script type="text/javascript" src="game.js"></script>
+	<script type="text/javascript" src="gameClassic.js"></script>
+	<script type="text/javascript" src="gameLoop.js"></script>
 	<script type="text/javascript" src="gui.js"></script>
 	<div id="container">
-		<div id="gamemenu">
+		<div>
 			<div id="title"></div>
-			<div id="easy"></div>
-			<div id="normal"></div>
-			<div id="hard"></div>
-			<div id="custom"></div>
-			<div id="option">
-				高度：<input id="widthnum" class="inputnum" type="text" value = "10"/>
-				宽度：<input id="heightnum" class="inputnum" type="text" value = "10"/>
-				雷数：<input id="minenum" class="inputnum" type="text" value = "10"/>
-				<div id="start"></div>
+			<div id="mode">
+				<div id="classic"></div>
+				<div id="loop"></div>
 			</div>
-			<div id="help"></div>
+			<div id="easy" class="menu"></div>
+			<div id="normal" class="menu"></div>
+			<div id="hard" class="menu"></div>
+			<div id="custom" class="menu"></div>
+			<div id="option">
+				宽度：<input id="widthnum" class="inputnum" type="text" value = "10"/>
+				高度：<input id="heightnum" class="inputnum" type="text" value = "10"/>
+				雷数：<input id="minenum" class="inputnum" type="text" value = "10"/>
+				<div id="start" class="menu"></div>
+			</div>
+			<div id="help" class="menu"></div>
 			<div id="gamehelp"><strong>游戏规则：</strong>
 				扫雷就是要把所有非地雷的格子揭开即胜利；踩到地雷格子就算失败.</br>
 				<strong>游戏操作：</strong>游戏主区域由很多个方格组成。</br>
-				使用<span class="num3">鼠标左键点击</span>一个方格，方格即被打开并显示出方格中的数字；
+				使用<span>鼠标左键点击</span>一个方格，方格即被打开并显示出方格中的数字；
 				方格中数字则表示其周围的8个方格隐藏了几颗雷；</br>
 				如果点开的格子为空白格，即其周围有0颗雷，则其周围格子自动打开；
 				如果其周围还有空白格，则会引发连锁反应；</br>
-				在你认为有雷的格子上，<span class="num3">点击鼠标右键</span>即可标记雷；</br>
-				如果一个已打开格子周围所有的雷已经正确标出，则可以在此格上<span class="num3">点击鼠标左键</span>
+				在你认为有雷的格子上，<span>点击鼠标右键</span>即可标记雷；</br>
+				如果一个已打开格子周围所有的雷已经正确标出，则可以在此格上<span>点击鼠标左键</span>
 				打开其周围剩余的无雷格。</br></br>
 			</div>
 		</div>
@@ -44,8 +50,9 @@
 		</div>
 		</br>
 		<div id="gamemain">&nbsp;</div>
+		<div>
+		</div>
 	</div>
-
 </body>
 </html>
 

@@ -196,6 +196,4 @@ function play_sound(x)
 	}
 	s.volume = 0.1;
 	s.play();
-	s.play();
-	s.play();
 }

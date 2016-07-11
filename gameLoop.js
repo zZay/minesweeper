@@ -96,6 +96,7 @@ function sweepBlockLoop(x, y)
 		}
 		else
 		{
+			play_sound(2);
 			block.removeClass('hidden');
 			block.addClass('clear');
 			if(gameStatus == 3 || gameStatus == 4)

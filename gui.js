@@ -88,9 +88,17 @@ function custom_init()
 	{
 		x = 5;
 	}
+	if(x > 30)
+	{
+		x = 30;
+	}
 	if(y < 5)
 	{
 		y = 5;
+	}
+	if(y > 30)
+	{
+		y = 30;
 	}
 	if(y > x)
 	{
@@ -160,7 +168,7 @@ function result(win)
 {
 	play_sound(win);
 	var w = $("#result")[0];
-	w.style.top = $(document).height() - 0.5 * $(window).height() + "px";
+	w.style.top = $(document).scrollTop() + 0.5 * $(window).height() + "px";
 	w.style.display = "block";
 	if(win == 0)
 	{
@@ -187,5 +195,7 @@ function play_sound(x)
 		var s = document.getElementById("soundexpand");
 	}
 	s.volume = 0.1;
+	s.play();
+	s.play();
 	s.play();
 }

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="zh-cn">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta charset="utf-8">
 	<title>扫雷</title>
 	<link rel="stylesheet" href="game.css">
 	<script src="jquery.js" type="text/javascript"></script>
@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="gameLoop.js"></script>
 	<script type="text/javascript" src="gui.js"></script>
 	<div id="container">
-		<div>
+		<div id="gamemenu">
 			<div id="title"></div>
 			<div id="mode">
 				<div id="classic"></div>
@@ -29,35 +29,33 @@
 				<div id="start" class="menu"></div>
 			</div>
 			<div id="help" class="menu"></div>
-			<div id="gamehelp"><strong>游戏规则：</strong>
-				扫雷就是要把所有非地雷的格子揭开即胜利；踩到地雷格子就算失败.</br>
-				<strong>游戏操作：</strong>游戏主区域由很多个方格组成。</br>
-				使用<span>鼠标左键点击</span>一个方格，方格即被打开并显示出方格中的数字；
-				方格中数字则表示其周围的8个方格隐藏了几颗雷；</br>
-				如果点开的格子为空白格，即其周围有0颗雷，则其周围格子自动打开；
-				如果其周围还有空白格，则会引发连锁反应；</br>
-				在你认为有雷的格子上，<span>点击鼠标右键</span>即可标记雷；</br>
-				如果一个已打开格子周围所有的雷已经正确标出，则可以在此格上<span>点击鼠标左键</span>
-				打开其周围剩余的无雷格。</br></br>
+			<div id="gamehelp">
+				<strong>游戏规则：</strong>将所有非地雷格掀开则胜利，掀开地雷格则失败。</br>
+				<strong>游戏操作：</strong><span>鼠标左键点击</span>方格，则掀开并显示其中数字。
+				该数字表示其周围的8个方格共包含几颗雷。</br>
+				如果掀开空白格，因其周围没有雷，故其周围格子自动掀开。</br>
+				在有雷的格子上，<span>点击鼠标右键</span>可标记雷。</br>
+				若一已掀开格子周围所有的雷均已正确标出，则在此格上<span>点击鼠标左键</span>可打开其周围无雷格。</br>
+				<strong>循环模式：</strong>最上方格子的上方连接最下方格子，最下方格子的下方连接最上方格子，左右亦是。</br>
+				最外圈的半透明格子即为另一侧的第一个格子，不可点击。</br>
+				可在界面上通过鼠标拖动来改变当前视野位置。</br>
 			</div>
 		</div>
 		</br>
 		
 		<div id="gamesubmenu">
-			剩余雷数：<span id="gamelastnum">&nbsp;</span>
-			时间：<span id="gametime">&nbsp;</span>
-			秒<span id="gamewarning">&nbsp;</span>
+			<img src="insect.jpg"><span id="gamelastnum">&nbsp;</span>
+			<img src="colck.jpg"><span id="gametime">&nbsp;</span>s
 		</div>
 		</br>
 		<div id="gamemain">&nbsp;</div>
-		<div>
+		<div id="result">
+			<div id="ending"></div>
+			<input type="button" value="OK" onclick="hide();"/>
 		</div>
+		<!--<div id="foot">2016 at Tsinghua University</div>
+		<input type="button" value="win" onclick="result(1);"/>
+		<input type="button" value="lose" onclick="result(0);"/>-->
 	</div>
 </body>
 </html>
-
-					<!--<a onclick="init(10,10,10);return false;" href="#">初级</a>
-					<a onclick="init(16,16,40);return false;" href="#">中级</a>
-					<a onclick="init(30,16,99);return false;" href="#">高级</a>
-					<a onclick="$('#gamehelp').show();return false;" href="#">帮助</a>
-					<input id="gamecheck" type="checkbox" /><label for="gamecheck">是否使用标记(?)</label>-->

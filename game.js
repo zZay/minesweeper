@@ -12,19 +12,40 @@ var blockEdge = 30;
 var lastX, lastY;
 var dragging = false;
 
+function chooseBlock(i, j)
+{
+	if(gameStatus == 1) return $('#b' + i + '-' + j);
+	var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
+	var ii = i < 1 ? lenX : (i > lenX ? 1 : i);
+	var jj = j < 1 ? lenY : (j > lenY ? 1 : j);
+	var allBlocks = $('#b' + ii + '-' + jj);
+	if(ii == 1 || jj == 1 || ii == lenX || jj == lenY)
+	{
+		var mI = ii == 1 ? lenX + 1 : (ii == lenX ? 0 : ii);
+		var mJ = jj == 1 ? lenY + 1 : (jj == lenY ? 0 : jj);
+		if(mI != ii && mJ != jj)
+			allBlocks = $('#b' + ii + '-' + jj + ',' + '#b' + mI + '-' + mJ + 
+				',' + '#b' + ii + '-' + mJ + ',' + '#b' + mI + '-' + jj);
+		else
+			allBlocks = $('#b' + ii + '-' + jj + ',' + '#b' + mI + '-' + mJ);
+	}
+	return allBlocks;
+}
 
 $(function()
 {
 	$('#gamemain').mouseup(function(e)
 	{
+		var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
 		dragging = false;
 		var clickBlock = $(e.target);
 		var id = clickBlock.attr('id');
 		var	x = parseInt(id.substring(1, id.indexOf('-'))); 
 		var	y = parseInt(id.substring(id.indexOf('-') + 1));
+		if(x < 1 || x > lenX || y < 1 || y > lenY) return;
+		clickBlock = chooseBlock(x, y);
 		if(gameStatus == 1 || gameStatus == 3)
 		{
-			var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
 			if(e.which == 1)
 			{
 				if(clickBlock.hasClass('hidden'))
@@ -38,18 +59,8 @@ $(function()
 					{
 						for(var j = y - 1; j <= y + 1; j++)
 						{
-							if(gameStatus == 1)
-							{
-								var block = $('#b' + i + '-' + j);
-								if(block.hasClass('hint')) block.removeClass('hint');
-							}
-							else
-							{
-								var ii = i < 1 ? lenX : (i > lenX ? 1 : i);
-								var jj = j < 1 ? lenY : (j > lenY ? 1 : j);
-								var block = $('#b' + ii + '-' + jj);
-								if(block.hasClass('hint')) block.removeClass('hint');
-							}
+							var block = chooseBlock(i, j);
+							if(block.hasClass('hint')) block.removeClass('hint');
 						}
 					}
 				}
@@ -86,35 +97,27 @@ $(function()
 	});
 	$('#gamemain').mousedown(function(e)
 	{
+		var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
+		var clickBlock = $(e.target);
+		var id = clickBlock.attr('id');
+		var	x = parseInt(id.substring(1, id.indexOf('-'))); 
+		var	y = parseInt(id.substring(id.indexOf('-') + 1));
+		clickBlock = chooseBlock(x, y);
+		lastX = x, lastY = y;
+		if(x < 1 || x > lenX || y < 1 || y > lenY) return;
 		if(gameStatus == 1 || gameStatus == 3)
 		{
-			var clickBlock = $(e.target);
-			var id = clickBlock.attr('id');
-			var	x = parseInt(id.substring(1, id.indexOf('-'))); 
-			var	y = parseInt(id.substring(id.indexOf('-') + 1));
-			lastX = x, lastY = y;
 			dragging = true;
 			if(e.which == 1)
 			{
-				var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
-				if(!clickBlock.hasClass('hidden'))
+				if(!clickBlock.hasClass('hidden') && !clickBlock.hasClass('flag'))
 				{
 					for(var i = x - 1; i <= x + 1; i++)
 					{
 						for(var j = y - 1; j <= y + 1; j++)
 						{
-							if(gameStatus == 1)
-							{
-								var block = $('#b' + i + '-' + j);
-								if(block.hasClass('hidden')) block.addClass('hint');
-							}
-							else
-							{
-								var ii = i < 1 ? lenX : (i > lenX ? 1 : i);
-								var jj = j < 1 ? lenY : (j > lenY ? 1 : j);
-								var block = $('#b' + ii + '-' + jj);
-								if(block.hasClass('hidden')) block.addClass('hint');
-							}
+							var block = chooseBlock(i, j);
+							if(block.hasClass('hidden')) block.addClass('hint');
 						}
 					}
 				}
@@ -179,20 +182,26 @@ function moveMineArea(dict)
 	delete mineArea;
 	mineArea = temArea;
 	var area = '';
-	for(var i = 1; i <= lenX; i++)
+	for(var i = 0; i <= lenX + 1; i++)
 	{
-		for(var j = 1; j <= lenY; j++)
+		for(var j = 0; j <= lenY + 1; j++)
 		{
-			var ii = (i - dict.x - 1 + lenX) % lenX + 1;
-			var jj = (j - dict.y - 1 + lenY) % lenY + 1;
+			var i0 = i, j0 = j;
+			if(i == 0 || i == lenX + 1 || j == 0 || j == lenY + 1)
+			{
+				i0 = i < 1 ? lenX : (i > lenX ? 1 : i);
+				j0 = j < 1 ? lenY : (j > lenY ? 1 : j);
+			}
+			var ii = (i0 - dict.x - 1 + lenX) % lenX + 1;
+			var jj = (j0 - dict.y - 1 + lenY) % lenY + 1;
 			var block = $('#b' + ii + '-' + jj);
-			var number = '';
+			var number = '', classType = block.attr('class');
+			if(i0 != i || j0 != j) classType += ' translucent';
 			if(block.attr('class').indexOf('num') != -1) 
 				number = block.attr('class')[3];
-			debugger;
 			area += "<div id = 'b" + i + '-' + j + 
 				"' style = 'left: " + (i - 1) * blockEdge + 
-				"px; top: " + (j - 1) * blockEdge + "px;' class = '" + block.attr('class') +
+				"px; top: " + (j - 1) * blockEdge + "px;' class = '" + classType +
 				 "'>" + number + "</div>";
 		}
 	}
@@ -213,6 +222,7 @@ function startTimer()
 function gameover(win)
 {
 	var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
+	var originMode = gameStatus;
 	gameStatus = 0;
 	if(win)
 	{
@@ -232,8 +242,9 @@ function gameover(win)
 					$(blockId).addClass('flag');
 				}
 			}
-			else sweepBlock(i, j);
+			else originMode == 1 ? sweepBlock(i, j) : sweepBlockLoop(i, j);
 		}
 	}
-	$('#gamewarning').text(win ? 'Congratulation! You win!' : 'Sorry, you lose.');
+	result(win);
+	//$('#gamewarning').text(win ? 'Congratulation! You win!' : 'Sorry, you lose.');
 }

@@ -34,11 +34,18 @@ function initLoop(lenX, lenY, numMine, clickX, clickY)
 						if(mineArea[ii][jj] == -1) mineArea[x][y]++;
 					}
 	var area = '';
-	for(var i = 1; i <= lenX; i++)
-		for(var j = 1; j <= lenY; j++)
-			area += "<div id = 'b" + i + '-' + j + 
-				"' style = 'left: " + (i - 1) * blockEdge + 
-				"px; top: " + (j - 1) * blockEdge + "px;' class = 'hidden'></div>";
+	for(var i = 0; i <= lenX + 1; i++)
+	{
+		for(var j = 0; j <= lenY + 1; j++)
+		{
+			var classType;
+			if(i != 0 && i != lenX + 1 && j != 0 && j != lenY + 1) classType = 'hidden';
+			else classType = 'hidden translucent';
+				area += "<div id = 'b" + i + '-' + j + 
+					"' style = 'left: " + (i - 1) * blockEdge + 
+					"px; top: " + (j - 1) * blockEdge + "px;' class ='" + classType + "'></div>";
+		}
+	}
 	$('#gamemain').html(area).width(lenX * blockEdge).height(lenY * blockEdge).show();
 	$('#gamewarning').html('');
 	$('#gamesubmenu').show();
@@ -48,7 +55,7 @@ function initLoop(lenX, lenY, numMine, clickX, clickY)
 function sweepBlockLoop(x, y)
 {
 	var lenX = mineArea.length - 2, lenY = mineArea[0].length - 2;
-	var block = $('#b' + x + '-' + y);
+	var block = chooseBlock(x, y);
 	if(gameStatus == 4 && mineArea[x][y] != 0)
 	{
 		initLoop(lenX, lenY, remainingMine, x, y);

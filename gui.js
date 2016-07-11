@@ -15,39 +15,36 @@ $(document).ready(function()
 		if(mode == 0)
 		{
 			init(10, 10, 10);
-			adjust(10, 10);
 		}
-		if(mode == 1)
+		else if(mode == 1)
 		{
 			initLoop(10, 10, 10);
-			adjust(10, 10);
 		}
+		adjust(10, 10);
 	});
 	$("#normal").click(function()
 	{
 		if(mode == 0)
 		{
 			init(16, 16, 40);
-			adjust(16, 16);
 		}
-		if(mode == 1)
+		else if(mode == 1)
 		{
 			initLoop(16, 16, 40);
-			adjust(16, 16);
 		}
+		adjust(16, 16);
 	});
 	$("#hard").click(function()
 	{
 		if(mode == 0)
 		{
 			init(30, 16, 99);
-			adjust(30, 16);
 		}
-		if(mode == 1)
+		else if(mode == 1)
 		{
 			initLoop(30, 16, 99);
-			adjust(30, 16);
 		}
+		adjust(30, 16);
 	});
 	$("#custom").click(function()
 	{
@@ -61,6 +58,7 @@ $(document).ready(function()
 	{
 		$("#gamehelp").slideToggle("slow");
 	});
+	//$("#win")[0].style.display = "none";
 });
 
 function change_mode(m)
@@ -69,11 +67,11 @@ function change_mode(m)
 	if(m == 0)
 	{
 		$("#classic").css("border-color", "#000000");
-		$("#loop").css("border-color", "#045000");
+		$("#loop").css("border-color", "#066000");
 	}
 	else
 	{
-		$("#classic").css("border-color", "#045000");
+		$("#classic").css("border-color", "#066000");
 		$("#loop").css("border-color", "#000000");
 	}
 }
@@ -112,22 +110,21 @@ function custom_init()
 	if(mode == 0)
 	{
 		init(x, y, m);
-		adjust(x, y);
 	}
 	if(mode == 1)
 	{
 		initLoop(x, y, m);
-		adjust(x, y);
 	}
+	adjust(x, y);
 }
 
 function adjust(x, y)
 {
 	var r = get_rate(x, y);
 	$("#gamemain")[0].style.webkitTransform = "scale(" + r + ")";
-	$('html, body').animate(
-		{scrollTop: ($(document).height() - $(window).height())}, 'slow'
-	);
+	
+	var dh = $(document).height() - $(window).height();
+	$('html, body').animate({scrollTop: dh}, 'slow');
 	$('#gametime').text('0');
 }
 
@@ -153,4 +150,24 @@ function get_rate(x, y)
 		}
 	}
 	return rate;
+}
+
+function result(win)
+{
+	var w = $("#result")[0];
+	w.style.top = $(document).height() - 0.5 * $(window).height() + "px";
+	w.style.display = "block";
+	if(win == 1)
+	{
+		$("#ending")[0].style.backgroundPosition = "bottom left";
+	}
+	else
+	{
+		$("#ending")[0].style.backgroundPosition = "top left";
+	}		
+}
+
+function hide()
+{
+	$("#result")[0].style.display = "none";
 }

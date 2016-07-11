@@ -12,10 +12,10 @@
 	font-size:14px;
 }
 #title{
-	margin:0px auto 50px;
-	width:780px;
-	height:120px;
-	background:url(title2.jpg) 0px 0px;
+	margin:20px auto 50px;
+	width:760px;
+	height:100px;
+	background:url(title.jpg) 0px 0px;
 }
 .menu{
 	margin:0px auto;
@@ -24,14 +24,13 @@
 }
 #mode{
 	margin:0px auto;
-	height:170px;
-	width:300px;
-	-webkit-transform:scale(0.7);
+	height:160px;
+	width:230px;
 }
 #classic{
 	float:left;
-	width:118px;
-	height:170px;
+	width:95px;
+	height:130px;
 	cursor:hand;
 	background:url(mode.jpg) 0px 0px;
 	border-style:solid;
@@ -41,13 +40,13 @@
 }
 #loop{
 	float:right;
-	width:119px;
-	height:170px;
+	width:95px;
+	height:130px;
 	cursor:hand;
-	background:url(mode.jpg) -120px 0px;
+	background:url(mode.jpg) -95px 0px;
 	border-style:solid;
 	border-width:5px;
-	border-color:#045000;
+	border-color:#066000;
 	border-radius:10px;
 }
 #easy{
@@ -99,12 +98,14 @@
 #gamesubmenu{
 	display:none;
 	text-align:center;
+	padding-right:30px;
 }
-#gamewarning{
-	color:#f00;
+img{
+	vertical-align:-60%;
+	margin:0 10px 0 40px;
 }
 #gamemain{
-	margin:20px auto;
+	margin:20px auto 40px;
 	position:relative;
 	#background:#ddd;
 	border:2px solid #086E00;
@@ -143,8 +144,34 @@
 .num7{background:url(30.jpg) -180px 0;color:#7F5F84;}
 .num8{background:url(30.jpg) -180px 0;color:#808080;}
 
+#result{
+	position:absolute;
+	left:50%;
+	margin:-60px 0 0 -150px;
+	width:300px;
+	height:120px;
+	z-index:99;
+	opacity:0.8;
+	text-align:center;
+	background-color:#ffffff;
+	display:none;
+	border-style:solid;
+	border-width:5px;
+	border-color:#808080;
+	border-radius:10px;
+}
+#ending{
+	margin:20px auto;
+	width:220px;
+	height:40px;
+	background:url(result.jpg);
+}
+.translucent
+{
+	opacity: 0.5;
+}
 #foot{
-	color:#bbbbbb;
-	margin:30px auto;
+	color:#99bbbb;
+	margin:30px auto 10px;
 	text-align:center;
 }

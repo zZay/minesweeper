@@ -43,6 +43,11 @@ $(function()
 		var	x = parseInt(id.substring(1, id.indexOf('-'))); 
 		var	y = parseInt(id.substring(id.indexOf('-') + 1));
 		if(x < 1 || x > lenX || y < 1 || y > lenY) return;
+		if(gameStatus == 1)
+		{
+			x = lastX;
+			y = lastY;
+		}
 		clickBlock = chooseBlock(x, y);
 		if(gameStatus == 1 || gameStatus == 3)
 		{
@@ -235,11 +240,11 @@ function gameover(win)
 		{
 			if(win)
 			{
-				var blockId = chooseBlock(i, j);
-				if($(blockId).hasClass('hidden'))
+				var block = chooseBlock(i, j);
+				if(block.hasClass('hidden'))
 				{
-					$(blockId).removeClass('hidden');
-					$(blockId).addClass('flag');
+					block.removeClass('hidden');
+					block.addClass('flag');
 				}
 			}
 			else originMode == 1 ? sweepBlock(i, j) : sweepBlockLoop(i, j);

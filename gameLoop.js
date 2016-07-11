@@ -126,13 +126,18 @@ function sweepBlockAroundLoop(x, y)
 		{
 			var ii = i < 1 ? lenX : (i > lenX ? 1 : i);
 			var jj = j < 1 ? lenY : (j > lenY ? 1 : j);
-			var blockId = '#b' + ii + '-' + jj;
-			if($(blockId).hasClass('flag')) 
+			var block = $('#b' + ii + '-' + jj);
+			if(block.hasClass('flag')) 
 			{
+				if(mineArea[ii][jj] != -1) 
+				{
+					gameover(false);
+					return;
+				}
 				numFlag++;
 				numHidden++;
 			}
-			else if($(blockId).hasClass('hidden')) numHidden++;
+			else if(block.hasClass('hidden')) numHidden++;
 		}
 	}
 	if(numFlag == mineArea[x][y] && numHidden > numFlag)
@@ -143,8 +148,8 @@ function sweepBlockAroundLoop(x, y)
 			{
 				var ii = i < 1 ? lenX : (i > lenX ? 1 : i);
 				var jj = j < 1 ? lenY : (j > lenY ? 1 : j);
-				var blockId = '#b' + ii + '-' + jj;
-				if(mineArea[ii][jj] >= 0 && $(blockId).hasClass('hidden'))
+				var block = $('#b' + ii + '-' + jj);
+				if(mineArea[ii][jj] >= 0 && block.hasClass('hidden'))
 					sweepBlockLoop(ii, jj);
 			}
 		}

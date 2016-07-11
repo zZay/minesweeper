@@ -112,13 +112,18 @@ function sweepBlockAround(x, y)
 		{
 			if(mineArea[i][j] != undefined)
 			{
-				var blockId = '#b' + i + '-' + j;
-				if($(blockId).hasClass('flag')) 
+				var block = $('#b' + i + '-' + j);
+				if(block.hasClass('flag')) 
 				{
+					if(mineArea[i][j] != -1) 
+					{
+						gameover(false);
+						return;
+					}
 					numFlag++;
 					numHidden++;
 				}
-				else if($(blockId).hasClass('hidden')) numHidden++;
+				else if(block.hasClass('hidden')) numHidden++;
 			}
 		}
 	}
@@ -128,8 +133,8 @@ function sweepBlockAround(x, y)
 		{
 			for(var j = y - 1; j <= y + 1; j++)
 			{
-				var blockId = '#b' + i + '-' + j;
-				if(mineArea[i][j] >= 0 && $(blockId).hasClass('hidden'))
+				var block = $('#b' + i + '-' + j);
+				if(mineArea[i][j] >= 0 && block.hasClass('hidden'))
 					sweepBlock(i, j);
 			}
 		}

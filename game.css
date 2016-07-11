@@ -3,6 +3,7 @@
 	color:#ffffff;
 	font-family:"Microsoft YaHei";
 	-webkit-user-select: none;
+	user-select: none;
 }
 #container{
 	margin:0px auto;

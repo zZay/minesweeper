@@ -58,7 +58,10 @@ $(document).ready(function()
 	{
 		$("#gamehelp").slideToggle("slow");
 	});
-	//$("#win")[0].style.display = "none";
+	$("#result").click(function()
+	{
+		$("#result")[0].style.display = "none";
+	});
 });
 
 function change_mode(m)
@@ -120,6 +123,7 @@ function custom_init()
 
 function adjust(x, y)
 {
+	$("#result")[0].style.display = "none";
 	var r = get_rate(x, y);
 	$("#gamemain")[0].style.webkitTransform = "scale(" + r + ")";
 	
@@ -154,10 +158,11 @@ function get_rate(x, y)
 
 function result(win)
 {
+	play_sound(win);
 	var w = $("#result")[0];
 	w.style.top = $(document).height() - 0.5 * $(window).height() + "px";
 	w.style.display = "block";
-	if(win == 1)
+	if(win == 0)
 	{
 		$("#ending")[0].style.backgroundPosition = "bottom left";
 	}
@@ -167,7 +172,20 @@ function result(win)
 	}		
 }
 
-function hide()
+function play_sound(x)
 {
-	$("#result")[0].style.display = "none";
+	if(x == 0)
+	{
+		var s = document.getElementById("soundlose");
+	}
+	else if(x == 1)
+	{
+		var s = document.getElementById("soundwin");
+	}
+	else if(x == 2)
+	{
+		var s = document.getElementById("soundexpand");
+	}
+	s.volume = 0.1;
+	s.play();
 }

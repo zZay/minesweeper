@@ -38,24 +38,26 @@
 				若一已掀开格子周围所有的雷均已正确标出，则在此格上<span>点击鼠标左键</span>可打开其周围无雷格。</br>
 				<strong>循环模式：</strong>最上方格子的上方连接最下方格子，最下方格子的下方连接最上方格子，左右亦是。</br>
 				最外圈的半透明格子即为另一侧的第一个格子，不可点击。</br>
-				可在界面上通过鼠标拖动来改变当前视野位置。</br>
+				可在界面上通过鼠标拖动来改变当前视野位置，拖动时算点击。</br>
 			</div>
 		</div>
-		</br>
-		
+		</br></br></br>
 		<div id="gamesubmenu">
-			<img src="insect.jpg"><span id="gamelastnum">&nbsp;</span>
-			<img src="colck.jpg"><span id="gametime">&nbsp;</span>s
+			<img src="img/insect.jpg"><span id="gamelastnum">&nbsp;</span>
+			<img src="img/colck.jpg"><span id="gametime">&nbsp;</span>s
 		</div>
 		</br>
 		<div id="gamemain">&nbsp;</div>
 		<div id="result">
 			<div id="ending"></div>
-			<input type="button" value="OK" onclick="hide();"/>
 		</div>
-		<!--<div id="foot">2016 at Tsinghua University</div>
-		<input type="button" value="win" onclick="result(1);"/>
-		<input type="button" value="lose" onclick="result(0);"/>-->
+		<audio id="soundwin" src="mp3/win.mp3" hidden="true"></audio>
+		<audio id="soundlose" src="mp3/biu.wav" hidden="true"></audio>
+		<audio id="soundexpand" src="mp3/expand.wav" hidden="true"></audio>
+		<!--<div id="foot">2016 at Tsinghua University</div>-->
+		<!--<input type="button" value="win" onclick="play_sound(1);"/>
+		<input type="button" value="lose" onclick="play_sound(0);"/>-->
+		<input type="button" value="expand" onclick="play_sound(2);"/>
 	</div>
 </body>
 </html>

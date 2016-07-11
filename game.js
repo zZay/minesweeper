@@ -235,7 +235,7 @@ function gameover(win)
 		{
 			if(win)
 			{
-				var blockId = '#b' + i + '-' + j;
+				var blockId = chooseBlock(i, j);
 				if($(blockId).hasClass('hidden'))
 				{
 					$(blockId).removeClass('hidden');
